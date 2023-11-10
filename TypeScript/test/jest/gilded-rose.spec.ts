@@ -82,4 +82,11 @@ describe('Gilded Rose', () => {
     const items = gildedRose.updateQuality();
     expect(items[0].quality).toBe(8);
   });
+
+  it('should never exceed quality of 50 or drop below 0', () => {
+    const gildedRose = new GildedRose([new Item('foo', 10, 0), new Item('Aged Brie', 2, 49)]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].quality).toBe(0);
+    expect(items[1].quality).toBe(50); // increase just by 1, because it can't be higher than 50
+  });
 });

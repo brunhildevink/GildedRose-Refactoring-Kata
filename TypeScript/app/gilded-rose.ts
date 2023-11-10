@@ -27,7 +27,7 @@ export class GildedRose {
 
       if (isBackstagePass) {
         this.updateBackstagePassQuality(item);
-      } else {
+      } else if (!isLegendaryItem) {
         this.updateNormalItemQuality(item);
       }
 
@@ -40,7 +40,7 @@ export class GildedRose {
   }
 
   private updateBackstagePassQuality(item: Item) {
-    let qualityIncrement =
+    const qualityIncrement =
       item.sellIn > 10
         ? BACKSTAGE_PASS_QUALITY_INCREMENT_HIGH
         : item.sellIn > 5
@@ -52,21 +52,13 @@ export class GildedRose {
     if (item.sellIn <= SELLIN_THRESHOLD) {
       item.quality = MIN_QUALITY;
     } else {
-      while (item.quality < MAX_QUALITY && qualityIncrement > 0 && item.sellIn) {
-        item.quality += 1;
-        qualityIncrement -= 1;
-      }
+      item.quality = Math.min(MAX_QUALITY, item.quality + qualityIncrement); // if quality is already at max, it will not be increased
     }
   }
 
   private updateNormalItemQuality(item: Item) {
     const isConjuredItem = item.name.includes('Conjured');
-
-    let qualityDecrement = isConjuredItem ? QUALITY_DECREMENT_EXPIRED : item.sellIn > SELLIN_THRESHOLD ? QUALITY_DECREMENT_NORMAL : QUALITY_DECREMENT_EXPIRED;
-
-    while (item.quality > MIN_QUALITY && item.quality < MAX_QUALITY && qualityDecrement > 0) {
-      item.quality -= 1;
-      qualityDecrement -= 1;
-    }
+    const qualityDecrement = isConjuredItem ? QUALITY_DECREMENT_EXPIRED : item.sellIn > SELLIN_THRESHOLD ? QUALITY_DECREMENT_NORMAL : QUALITY_DECREMENT_EXPIRED;
+    item.quality = Math.max(MIN_QUALITY, item.quality - qualityDecrement); // if quality is already at min, it will not be decreased
   }
 }
