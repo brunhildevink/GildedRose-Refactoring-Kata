@@ -60,7 +60,9 @@ export class GildedRose {
   }
 
   private updateNormalItemQuality(item: Item) {
-    let qualityDecrement = item.sellIn > SELLIN_THRESHOLD ? QUALITY_DECREMENT_NORMAL : QUALITY_DECREMENT_EXPIRED;
+    const isConjuredItem = item.name.includes('Conjured');
+
+    let qualityDecrement = isConjuredItem ? QUALITY_DECREMENT_EXPIRED : item.sellIn > SELLIN_THRESHOLD ? QUALITY_DECREMENT_NORMAL : QUALITY_DECREMENT_EXPIRED;
 
     while (item.quality > MIN_QUALITY && item.quality < MAX_QUALITY && qualityDecrement > 0) {
       item.quality -= 1;
