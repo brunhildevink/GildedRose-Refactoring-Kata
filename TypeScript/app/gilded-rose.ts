@@ -22,18 +22,21 @@ export class GildedRose {
 
   updateQuality() {
     this.items.forEach(item => {
-      const isBackstagePass = Object.values(BackstagePasses).includes(item.name as BackstagePasses);
       const isLegendaryItem = Object.values(LegendaryItems).includes(item.name as LegendaryItems);
+
+      if (isLegendaryItem) {
+        return this.items
+      }
+
+      const isBackstagePass = Object.values(BackstagePasses).includes(item.name as BackstagePasses);
 
       if (isBackstagePass) {
         this.updateBackstagePassQuality(item);
-      } else if (!isLegendaryItem) {
+      } else {
         this.updateNormalItemQuality(item);
       }
 
-      if (!isLegendaryItem) {
-        item.sellIn -= 1;
-      }
+      item.sellIn -= 1;
     });
 
     return this.items;
