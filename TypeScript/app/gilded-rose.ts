@@ -1,5 +1,5 @@
 import { BackstagePasses, ConjuredItems, LegendaryItems } from "./types";
-import { MAX_QUALITY, MIN_QUALITY, BACKSTAGE_PASS_QUALITY_INCREMENT_HIGH, BACKSTAGE_PASS_QUALITY_INCREMENT_MEDIUM, BACKSTAGE_PASS_QUALITY_INCREMENT_LOW, SELLIN_THRESHOLD, QUALITY_DECREMENT_NORMAL, QUALITY_DECREMENT_EXPIRED } from "./constants";
+import { MAX_QUALITY, MIN_QUALITY, BACKSTAGE_PASS_QUALITY_INCREMENT_HIGH, BACKSTAGE_PASS_QUALITY_INCREMENT_MEDIUM, BACKSTAGE_PASS_QUALITY_INCREMENT_LOW, SELLIN_THRESHOLD, QUALITY_DECREMENT_NORMAL, QUALITY_DECREMENT_EXPIRED, SELLIN_DECREMENT } from "./constants";
 
 export class Item {
   name: string;
@@ -33,7 +33,7 @@ export class GildedRose {
           this.updateNormalItemQuality(item);
         }
 
-        item.sellIn -= 1;
+        item.sellIn -= SELLIN_DECREMENT;
       }
     });
 
