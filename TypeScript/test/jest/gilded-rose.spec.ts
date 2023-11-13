@@ -89,4 +89,11 @@ describe('Gilded Rose', () => {
     expect(items[0].quality).toBe(0);
     expect(items[1].quality).toBe(50); // increase just by 1, because it can't be higher than 50
   });
+
+  it('should skip legendary items', () => {
+    const gildedRose = new GildedRose([new Item(LegendaryItems.Sulfuras, 10, 80), new Item('foo', 10, 10)]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].quality).toBe(80);
+    expect(items[1].quality).toBe(9);
+  });
 });

@@ -6,3 +6,7 @@ export enum BackstagePasses {
 export enum LegendaryItems {
   Sulfuras = "Sulfuras, Hand of Ragnaros"
 }
+
+export enum ConjuredItems {
+  Conjured = "Conjured Mana Cake"
+}
